@@ -2,6 +2,10 @@ import { useState } from "react";
 import MovieList from "./components/MovieList";
 import Filter from "./components/Filter";
 
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import MovieDetails from "./pages/MovieDetails";
+
 const initialMovies = [
   {
     title: "Breaking Bad",
@@ -32,6 +36,11 @@ function App() {
 
   return (
     <div className="bg-black min-h-screen">
+      {/* Routes Setup */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:title" element={<MovieDetails />} />
+      </Routes>
       <div className="relative h-[500px] flex items-center justify-center bg-gradient-to-r from-blue-500 via-black to-red-500">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold">🎬 Welcome to MovieFlix</h1>

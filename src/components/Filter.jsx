@@ -20,6 +20,17 @@ function Filter({ setFilter, addMovie }) {
     }
   };
 
+  const closeModal = () => {
+    document.getElementById("addMovieModal").close();
+    setNewMovie({
+      title: "",
+      description: "",
+      posterURL: "",
+      rating: 0,
+    });
+    setPreviewImage(null);
+  };
+
   return (
     <div className="flex justify-center items-center gap-4 my-6">
       <input
@@ -53,14 +64,21 @@ function Filter({ setFilter, addMovie }) {
         ➕ Add Movie
       </button>
 
-      {/* Movie Add Modal */}
       <dialog
         id="addMovieModal"
         className="p-6 bg-gray-900 rounded-md text-white"
       >
-        <h2 className="text-xl font-bold mb-2">Add a New Movie</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Add a New Movie</h2>
 
-        {/* Movie Title */}
+          <button
+            onClick={closeModal}
+            className="px-3 py-1 text-white rounded hover:bg-red-500"
+          >
+            ✖
+          </button>
+        </div>
+
         <input
           type="text"
           placeholder="Title"
@@ -69,7 +87,6 @@ function Filter({ setFilter, addMovie }) {
           onChange={(e) => setNewMovie({ ...newMovie, title: e.target.value })}
         />
 
-        {/* Movie Description */}
         <input
           type="text"
           placeholder="Description"
@@ -80,7 +97,6 @@ function Filter({ setFilter, addMovie }) {
           }
         />
 
-        {/* Movie Image Upload */}
         <input
           type="file"
           accept="image/*"
@@ -88,7 +104,6 @@ function Filter({ setFilter, addMovie }) {
           onChange={handleImageUpload}
         />
 
-        {/* Image Preview */}
         {previewImage && (
           <img
             src={previewImage}
@@ -97,7 +112,6 @@ function Filter({ setFilter, addMovie }) {
           />
         )}
 
-        {/* Movie Rating */}
         <input
           type="number"
           placeholder="Rating"
@@ -108,20 +122,21 @@ function Filter({ setFilter, addMovie }) {
           }
         />
 
-        {/* Add Movie Button */}
-        <button
-          className="p-3 bg-green-500 text-white rounded w-full"
-          onClick={() => {
-            if (!newMovie.posterURL) {
-              alert("Please upload an image.");
-              return;
-            }
-            addMovie(newMovie);
-            document.getElementById("addMovieModal").close();
-          }}
-        >
-          ✅ Add
-        </button>
+        <div className="flex gap-4 mt-4">
+          <button
+            className="p-3 bg-green-500 text-white rounded w-full hover:bg-green-600"
+            onClick={() => {
+              if (!newMovie.posterURL) {
+                alert("Please upload an image.");
+                return;
+              }
+              addMovie(newMovie);
+              closeModal();
+            }}
+          >
+            ✅ Add
+          </button>
+        </div>
       </dialog>
     </div>
   );
